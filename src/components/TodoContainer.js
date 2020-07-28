@@ -61,12 +61,15 @@ const TodoContainer = ({ project }) => {
           <div className="x-btn"></div>
         </div>
         <div id="todos">
-          {showProject.map((todo, index) =>  
-            <div key={index}>
-              <Todo todo={todo} index={index} showEditForm={showEditForm} toggleEditForm={toggleEditForm}/>
-              <EditTodoForm todo={todo} index={index} showEditForm={showEditForm} toggleEditForm={toggleEditForm}/>
-            </div>
-          )}
+          { showProject 
+            ? showProject.map((todo, index) =>  
+              <div key={index}>
+                <Todo todo={todo} index={index} showEditForm={showEditForm} toggleEditForm={toggleEditForm}/>
+                <EditTodoForm todo={todo} index={index} showEditForm={showEditForm} toggleEditForm={toggleEditForm}/>
+              </div>
+            )
+            : ""
+          }
         <AddTodoForm showTodoForm={showTodoForm} toggleTodoForm={toggleTodoForm}/>
         </div>
         <button 

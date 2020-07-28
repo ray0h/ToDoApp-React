@@ -9,18 +9,20 @@ const ProjectContainer = ({ projects }) => {
   const toggleProjectForm = () => {
     setShowProjectForm(!showProjectForm);
   }
-
+ 
   return (
     <div id="project-container">
       <div className="project-header">Projects</div> 
       <div id="project-list">
-        { projects.map((project, ind) => 
+        { projects 
+          ? projects.map((project, ind) => 
             <Project 
               key = {ind} 
               project = {project} 
               index =  {ind}
             />
-        )}
+            )
+          : ""}
         <AddProjectForm showProjectForm={showProjectForm} toggleProjectForm={toggleProjectForm}/>
       </div>
       <button 

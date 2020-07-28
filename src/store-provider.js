@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 // default project/todos
-let today = JSON.parse(JSON.stringify(new Date()));
+const today = JSON.parse(JSON.stringify(new Date()));
 let defaultTodos = [
   {
     project: "My Project",
@@ -29,33 +29,35 @@ let defaultTodos = [
 // grab projects in localStorage or set default 
 let storedState = window.localStorage.getItem("projects");
 let defaultState = JSON.parse(storedState);
-
+console.log(defaultState)
 if (!storedState) {
-  let defaultState = {
+  defaultState = {
     projects: defaultTodos,
     currentProject: defaultTodos[0],
   }
+
   window.localStorage.setItem("projects", JSON.stringify(defaultState));
 }
+console.log(defaultState)
 
 // state reducer - ideally would split up further and combinereducers
 function reducer (state = defaultState, action = {}) {
-  let  updatedTodos, updatedProjects, updatedCurrent, newState;
+  let updatedTodos, updatedProjects, updatedCurrent, newState;
   
   switch(action.type) {
     case 'ADD_PROJECT': 
       updatedProjects = state.projects.concat(action.nextProject);
       newState = {
         ...state,
-        projects:updatedProjects
+        projects: updatedProjects
       };
       window.localStorage.setItem("projects", JSON.stringify(newState));
       return newState;
     case 'DEL_PROJECT':
-      let index = state.projects.indexOf(state.currentProject);
+      let index = state.projects.findIndex((project) => project === state.currentProject);
+     
       // move currentProject marker if it's deleted
       updatedCurrent=state.projects[Math.abs(index-1)];
-
       newState = {
         projects: state.projects.filter((proj, index) => index !== action.index), currentProject: updatedCurrent
       };
